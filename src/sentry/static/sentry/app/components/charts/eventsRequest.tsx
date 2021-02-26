@@ -134,6 +134,7 @@ type EventsRequestPartialProps = {
    * optional and when not passed confirmation is not required.
    */
   confirmedQuery?: boolean;
+  expired?: boolean;
 };
 
 type TimeAggregationProps =
@@ -202,18 +203,26 @@ class EventsRequest extends React.PureComponent<EventsRequestProps, EventsReques
       errored: false,
     }));
 
-    try {
-      api.clear();
-      timeseriesData = await doEventsRequest(api, props);
-    } catch (resp) {
-      if (resp && resp.responseJSON && resp.responseJSON.detail) {
-        addErrorMessage(resp.responseJSON.detail);
-      } else {
-        addErrorMessage(t('Error loading chart data'));
-      }
+    if (this.props.expired) {
+      const start = new Date(this.props.start!);
+      addErrorMessage(t(start + ' is past the retention'), {append: true});
       this.setState({
         errored: true,
       });
+    } else {
+      try {
+        api.clear();
+        timeseriesData = await doEventsRequest(api, props);
+      } catch (resp) {
+        if (resp && resp.responseJSON && resp.responseJSON.detail) {
+          addErrorMessage(resp.responseJSON.detail);
+        } else {
+          addErrorMessage(t('Error loading chart data'));
+        }
+        this.setState({
+          errored: true,
+        });
+      }
     }
 
     if (this.unmounting) {

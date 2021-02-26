@@ -1026,6 +1026,7 @@ describe('EventView.toNewQuery()', function () {
     statsPeriod: '14d',
     environment: ['staging'],
     display: 'releases',
+    expired: false,
   };
 
   it('outputs the right fields', function () {
@@ -1047,6 +1048,7 @@ describe('EventView.toNewQuery()', function () {
       range: '14d',
       environment: ['staging'],
       display: 'releases',
+      expired: false,
     };
 
     expect(output).toEqual(expected);
@@ -1076,6 +1078,7 @@ describe('EventView.toNewQuery()', function () {
       range: '14d',
       environment: ['staging'],
       display: 'releases',
+      expired: false,
     };
 
     expect(output).toEqual(expected);
@@ -1105,6 +1108,7 @@ describe('EventView.toNewQuery()', function () {
       range: '14d',
       environment: ['staging'],
       display: 'releases',
+      expired: false,
     };
 
     expect(output).toEqual(expected);
