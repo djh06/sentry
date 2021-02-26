@@ -8,9 +8,10 @@ import space from 'app/styles/space';
 type Props = {
   type: 'stack_unwinding' | 'symbolication';
   icon: React.ReactElement;
+  className?: string;
 };
 
-function Item({type, icon}: Props) {
+function Item({type, icon, className}: Props) {
   function getLabel() {
     switch (type) {
       case 'stack_unwinding':
@@ -28,7 +29,7 @@ function Item({type, icon}: Props) {
   }
 
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       {icon}
       {getLabel()}
     </Wrapper>
